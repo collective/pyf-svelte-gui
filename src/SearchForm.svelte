@@ -1,13 +1,14 @@
 <script>
-  import { search_term } from "./stores";
   import { doSearch } from "./search"
+  import { search_term } from "./stores";
+  import { package_list } from "./stores";
 
-  $search_term = "collective";
+  let term = "";
+  $: search_term.set(term), term, doSearch();
 
 </script>
 
 <style>
-
 </style>
 
 <div class="search_form">
@@ -16,8 +17,7 @@
       type="text"
       placeholder="Packagename.."
       spellcheck="false"
-      on:input={doSearch}
       name="text"
-      bind:value={$search_term} />
+      bind:value={term} />
   </form>
 </div>

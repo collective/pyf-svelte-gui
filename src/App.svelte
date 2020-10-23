@@ -3,11 +3,11 @@
   import SearchForm from "./SearchForm";
   import SearchFilter from "./SearchFilter";
   import { search_classifiers } from "./stores.js";
-  import { unsub_plone_version, unsub_search_term } from "./search.js";
+  import { unsub_search_filter, unsub_search_term } from "./search.js";
   import { onDestroy } from "svelte";
 
   onDestroy(unsub_search_term);
-  onDestroy(unsub_plone_version);
+  onDestroy(unsub_search_filter);
 </script>
 
 <style>

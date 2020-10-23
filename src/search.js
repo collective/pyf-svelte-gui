@@ -1,43 +1,48 @@
 import { api_url } from "./settings";
 import { package_list } from "./stores";
 import { search_term } from "./stores";
-import { plone_version } from "./stores";
+import { search_filter } from "./stores";
 import { search_classifiers } from "./stores";
 
-let text = "";
-let selected_plone_version = "";
+let term = "";
+let filter = {};
 
 export const unsub_search_term = search_term.subscribe(value => {
-  text = value;
+  term = value;
 });
 
-export const unsub_plone_version = plone_version.subscribe(value => {
-  selected_plone_version = value;
+export const unsub_search_filter = search_filter.subscribe(value => {
+  filter = value;
 });
 
 
-export function doSearch(e) {
-  if (e.target.value.length <= 2) {
+export function doSearch() {
+  if (term.length <= 1) {
     return;
   }
   console.log("search...", api_url);
 
-  let classifiers = ["Framework :: Plone", "Framework :: Plone :: Addon"];
-  if (selected_plone_version) {
-    classifiers.push(selected_plone_version);
+  let classifiers = ["Framework :: Plone"];
+  if (filter.plone_version) {
+    classifiers.push(filter.plone_version);
+  }
+  if (filter.package_type) {
+    classifiers.push(filter.package_type);
   }
 
   fetch(api_url + "/search", {
     method: "POST",
     body: JSON.stringify({
-      text: text,
+      text: term,
       classifiers: classifiers
     })
   })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
-      package_list.set(data.result.batch);
+      if (data.result.batch === undefined){debugger;}
+      let batch = data.result.batch || [];
+      // console.log(batch);
+      package_list.set(batch);
     })
     .catch(error => console.error(error));
 }
