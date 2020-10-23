@@ -13,6 +13,7 @@
 
 </style>
 
+<div>found: {$package_list.length} Plone addons</div>
 <div class="package_list">
   {#each $package_list as package_item}
     <PackageItem>
