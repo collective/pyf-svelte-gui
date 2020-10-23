@@ -1,4 +1,4 @@
-# Client for pyf.api written in Svelte
+# Client for pyf.api written in Svelte (WIP)
 
 This is the UI, used for addons.plone.org to search for Plone addon's.
 It uses pyf.api and pyf.aggregator to aggregate and provide the data via json-api.
